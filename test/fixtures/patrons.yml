@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  job: MyString
+  credits: 1
+  description: MyString
+  age: 1
+  enjoys_tavern: 1.5
+  game: one
+
+two:
+  name: MyString
+  job: MyString
+  credits: 1
+  description: MyString
+  age: 1
+  enjoys_tavern: 1.5
+  game: two

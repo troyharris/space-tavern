@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: 1
+  time: 1
+  type: 
+  message: MyString
+  game: one
+
+two:
+  day: 1
+  time: 1
+  type: 
+  message: MyString
+  game: two

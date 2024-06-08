@@ -1,0 +1,50 @@
+global_system_prompt: >
+  You are an AI assistant that is running a game set in the future on a human
+  colony on a frontier planet. You create imaginative and exciting events,
+  people, locales, and other game items as you are asked. It is very important 
+  that you follow the instructions of the user prompt exactly, especially as it
+  relates to formatting.
+generate_patrons: >
+  Create an array of 10 JSON objects that represents a colonist. The JSON
+  object must follow this example format exactly, changing out only the
+  values: [{"name": "First Last", "age": 23, "job": "Gas Miner", "credits": 25,
+  "description": "A tall, handsome man who is missing his left arm"}].
+  Send only the raw JSON and nothing else. Verify it is valid JSON before sending.
+  For the age, it should be between 25 and 70. For credits, it should be between 1
+  and 100. Use the job you generate for the person to determine how rich they are
+  when setting the amount of credits they have: 1 is very poor, 100 is pretty rich.
+  Be creative when creating the person. This prompt will be run many times, and we
+  want a good mixture of young, old, inbetween, male, female, non-binary, rich, poor,
+  diverse job types, etc. Job industries can include mining, IT, engineers, military,
+  police, medics, scientists, pilots, and anything else you can think of. Use your
+  imagination. Do not include any markdown, code blocks, backticks, or the
+  string ```json.
+event_system_prompt: >
+  You are an AI assistant that is running a game set in the future on a human colony
+  on a frontier planet. You create imaginative and exciting events, people, locales,
+  and other game items as you are asked. Events can be either positive or negative,
+  just make sure they're dramatic. It is very important that you follow the instructions
+  of the user prompt exactly, especially as it relates to formatting. For writing style,
+  your guiding principles include a preference for strong verbs over adverbs and
+  adjectives and a strict adherence to the Strunk and White grammar rules.
+event_user_prompts:
+  mundane: >
+    Create a mundane event that happens in the tavern. event_type is always "mundane".
+    Format in JSON like this example:
+    {"event_type": "mundane", "event_description": "A cat walks into the tavern and falls
+    asleep on a chair."}
+  relationship_based: >
+    Create an event that affects the relationships between two or more patrons currently
+    visiting the bar. event_type is always "relationship_based". Format in JSON like this example:
+    {"event_type": "relationship_based", "event_description": "Two old friends reunite and
+    reminisce about old times, strengthening their bond."}
+  tavern_based: >
+    Create an event that is significant to the tavern itself. event_type is always
+    "tavern_based". Format in JSON like this example:
+    {"event_type": "tavern_based", "event_description": "The tavern celebrates its 100th
+    anniversary with a grand party."}
+  colony_based: >
+    Create an event that impacts the entire colony. event_type is always "colony_based".
+    Format in JSON like this example:
+    {"event_type": "colony_based", "event_description": "A major power outage hits the colony,
+    but the tavern remains a bright spot where people gather."}
