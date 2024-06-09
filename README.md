@@ -1,24 +1,85 @@
-# README
+# Space Tavern
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
 
-Things you may want to cover:
+Space Tavern is an in-development game set in a futuristic human colony on a frontier planet. The game involves managing a tavern, interacting with patrons, and handling various events. All of the patrons and events are generated using the OpenAI API.
 
-* Ruby version
+## Installation
 
-* System dependencies
+### Prerequisites
 
-* Configuration
+- Ruby 3.3.2
+- Bundler
+- SQLite3
+- Rails 7.1.3.4
+- OpenAI API Key
 
-* Database creation
+### Setup
 
-* Database initialization
+1. Clone the repository:
 
-* How to run the test suite
+   ```sh
+   git clone <repository_url>
+   cd tavern-api
+   ```
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Install dependencies:
 
-* Deployment instructions
+   ```sh
+   gem install bundler
+   bundle install
+   ```
 
-* ...
+3. Prepare the database:
+
+   ```sh
+   bin/rails db:prepare
+   ```
+
+4. Set the OpenAI API Key in the .env file:
+
+   ```sh
+   OPENAI_API_KEY=<your_api_key>
+   ```
+
+5. Start the server:
+   ```sh
+   bin/rails server
+   ```
+
+## Development
+
+### Current Features
+
+- Patron management
+- Event generation
+- Time advancement
+- Message management
+- Game logic
+
+### In Development
+
+- Patron management
+- Frontend integration
+- Relationship management
+- Economic management
+
+### Running Tests
+
+Execute the test suite:
+
+```sh
+bin/rails test
+```
+
+### Contributing
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Push to your fork.
+5. Create a pull request.
+
+### Contact
+
+For any questions or suggestions, please open an issue or contact the maintainers.
