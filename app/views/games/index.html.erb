@@ -1,0 +1,15 @@
+<h1>Games</h1>
+<div id="games">
+  <% if @games.any? %>
+    <% @games.each do |game| %>
+      <div class="game">
+        <h2><%= game.name %></h2>
+        <p><%= game.description %></p>
+        <!-- Add more game attributes as needed -->
+        <%= button_to 'Show', game_path(game), method: :get, data: { turbo_action: 'advance' } %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No games available.</p>
+  <% end %>
+</div>

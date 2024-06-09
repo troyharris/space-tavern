@@ -5,11 +5,20 @@ class GamesController < ApplicationController
   def index
     @games = Game.includes(:patrons, :events, :messages).all
 
-    render json: @games, include: [:patrons, :events, :messages]
+    # Add this debug line
+    Rails.logger.debug "Games: #{@games.inspect}"
+
+    respond_to do |format|
+      format.html { render :index } # renders app/views/games/index.html.erb by default
+      format.json { render json: @games.as_json(include: [:patrons, :events, :messages]) }
+    end
   end
   # GET /games/1
   def show
-    render json: @game, include: [:patrons, :events, :messages]
+    respond_to do |format|
+      format.html { render :show } # renders app/views/games/show.html.erb by default
+      format.json { render json: @game, include: [:patrons, :events, :messages] }
+    end
   end
 
   # POST /games
@@ -40,7 +49,8 @@ class GamesController < ApplicationController
   def advance_time
     game = Game.includes(:patrons, :events, :messages).find(params[:id])
     game.advance_time
-    render json: game, include: [:patrons, :events, :messages]
+    # render json: game, include: [:patrons, :events, :messages]
+    redirect_to game_path(game)
   end
 
   def create_new_game

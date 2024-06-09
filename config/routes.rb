@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   resources :events
   resources :patrons
   resources :games do
+    collection do
+      post 'create_new_game'
+    end
     member do
       post 'advance_time'
-      post 'create_new_game'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
