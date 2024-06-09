@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_09_175136) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_09_181004) do
   create_table "events", force: :cascade do |t|
     t.integer "day", null: false
     t.integer "time", null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_175136) do
   create_table "messages", force: :cascade do |t|
     t.integer "day", null: false
     t.integer "time", null: false
-    t.string "type", null: false
+    t.string "message_type", null: false
     t.string "message"
     t.integer "game_id", null: false
     t.datetime "created_at", null: false

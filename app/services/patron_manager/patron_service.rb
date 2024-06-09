@@ -12,7 +12,7 @@ module PatronManager
           random_check = rand
           if patron.visit_length > 0 && random_check > patron.enjoys_tavern
             patron.update(is_visiting: false, visit_length: 0)
-            puts "Patron #{patron.id} is leaving"
+            MessageManager::MessageService.create_message(@game, :tavern_information, "Patron #{patron.id} is leaving")
           else
             patron.increment!(:visit_length)
           end
@@ -26,7 +26,7 @@ module PatronManager
           random_check = rand
           if random_check < @game.tavern_popularity
             patron.update(is_visiting: true)
-            puts "Patron #{patron.id} is entering"
+            MessageManager::MessageService.create_message(@game, :tavern_information, "Patron #{patron.id} is entering")
           end
         end
       end
@@ -40,7 +40,7 @@ module PatronManager
             if rand < drink_order_probability
               patron.update(credits: patron.credits - @game.beer_cost)
               @game.update(beers_in_stock: @game.beers_in_stock - 1, credits: @game.credits + @game.beer_cost)
-              puts "Patron #{patron.id} is ordering a drink"
+              MessageManager::MessageService.create_message(@game, :tavern_information, "Patron #{patron.id} is ordering a drink")
             end
           end
         end
