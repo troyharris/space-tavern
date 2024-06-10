@@ -1,0 +1,12 @@
+<div class="font-infoheader font-bold uppercase bg-slate-950 border-green-500 border-2 rounded-md p-4">
+    <h2>Patrons</h2>
+    <div class="text-sm mt-2 font-light">
+        <ul>
+        <% @game.patrons.each do |patron| %>
+            <% if patron.is_visiting %>
+                <li><%= patron.name %> - <%= patron.job %></li>
+            <% end %>
+        <% end %>
+        </ul>
+    </div>
+</div>

@@ -23,6 +23,14 @@ class Game < ApplicationRecord
         GameLogic::CreateNewGameService.new(self).call
     end
 
+    def formatted_time
+        current_hour = self.current_time.hour
+        period = current_hour >= 12 ? 'pm' : 'am'
+        formatted_hour = current_hour % 12
+        formatted_hour = 12 if formatted_hour == 0
+        "#{formatted_hour}#{period}"
+    end
+
     private
 
     # Sets the default current_time based on start_hour
@@ -31,6 +39,5 @@ class Game < ApplicationRecord
         min_time = Time.parse('00:00:00')
         self.current_time = DateTime.new(today.year, today.month, today.day, min_time.hour, min_time.min, min_time.sec) + start_hour.hours
     end
-
 
   end

@@ -1,35 +1,19 @@
-<h1><%= @game.name %></h1>
-<p><%= @game.description %></p>
-<p><strong>Day:</strong> <%= @game.day %></p>
-<p><strong>History:</strong> <%= @game.history %></p>
-<p><strong>Tavern Popularity:</strong> <%= @game.tavern_popularity %></p>
-<p><strong>Colony Prosperity:</strong> <%= @game.colony_prosperity %></p>
-<p><strong>Credits:</strong> <%= @game.credits %></p>
-<p><strong>Beer Cost:</strong> <%= @game.beer_cost %></p>
-<p><strong>Beer Sell Price:</strong> <%= @game.beer_sell_price %></p>
-<p><strong>Beers in Stock:</strong> <%= @game.beers_in_stock %></p>
-<p><strong>Current Time:</strong> <%= @game.current_time %></p>
-<p><strong>Event Probability:</strong> <%= @game.event_probability %></p>
-<p><strong>Is Event Triggered:</strong> <%= @game.is_event_triggered %></p>
-<h2>Patrons</h2>
-<ul>
-  <% @game.patrons.each do |patron| %>
-    <li><%= patron.name %> - <%= patron.job %></li>
-  <% end %>
-</ul>
-
-<h2>Events</h2>
-<ul>
-  <% @game.events.each do |event| %>
-    <li><%= event.name %> - <%= event.description %></li>
-  <% end %>
-</ul>
-
-<h2>Messages</h2>
-<ul>
-  <% @game.messages.each do |message| %>
-    <li><%= message.day %> - <%= message.formatted_time %>: <%= message.message %></li>
-  <% end %>
-</ul>
-<%= button_to 'Advance Time', advance_time_game_path(@game), method: :post, data: { turbo_action: 'advance' } %>
+<%= render 'games/header' %>
+<div class="container flex flex-row m-3 p-3 h-full">
+    <div class="flex-auto basis-1/4">
+        <turbo-frame id="tavern_info">
+        <%= render 'games/tavern_info' %>
+        </turbo-frame>
+    </div>
+    <div class="flex-auto basis-1/2 h-5/6">
+        <turbo-frame id="messages">
+        <%= render 'games/messages' %>
+        </turbo-frame>
+    </div>
+    <div class="flex-auto basis-1/4">
+        <turbo-frame id="patrons_info">
+        <%= render 'games/patrons_info' %>
+        </turbo-frame>
+    </div>
+</div>
 

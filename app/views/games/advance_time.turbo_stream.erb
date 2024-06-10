@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "tavern_info" do %>
+  <%= render 'games/tavern_info' %>
+<% end %>
+<%= turbo_stream.replace "patrons_info" do %>
+  <%= render 'games/patrons_info' %>
+<% end %>
+<%= turbo_stream.replace "messages" do %>
+  <%= render 'games/messages' %>
+<% end %>

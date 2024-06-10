@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[ show update destroy ]
+  before_action :set_game, only: %i[ show update destroy advance_time]
 
   # GET /games
   def index
@@ -49,8 +49,10 @@ class GamesController < ApplicationController
   def advance_time
     game = Game.includes(:patrons, :events, :messages).find(params[:id])
     game.advance_time
-    # render json: game, include: [:patrons, :events, :messages]
-    redirect_to game_path(game)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to game_path(@game) }
+    end
   end
 
   def create_new_game

@@ -1,0 +1,13 @@
+<div>
+    <div class="font-infoheader font-bold uppercase bg-slate-950 border-green-500 border-2 rounded-md p-4 mx-4 overflow-auto max-h-96">
+        <h2>Messages</h2>
+        <div class="text-sm">
+            <ul>
+            <% @game.messages.order(id: :desc).each do |message| %>
+                <li class="my-2"><div class="text-xs text-green-300">Day <%= message.day %> - <%= message.formatted_time %></div><div class="normal-case"><%= message.message %></div></li>
+            <% end %>
+            </ul>
+        </div>
+    </div>
+    <%= button_to 'Advance Time', advance_time_game_path(@game), method: :post, data: { turbo_frame: '_top' } %>
+</div>

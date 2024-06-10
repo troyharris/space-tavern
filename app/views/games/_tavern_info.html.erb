@@ -1,0 +1,16 @@
+<div class="font-infoheader font-bold uppercase bg-slate-950 border-green-500 border-2 rounded-md p-4">
+    <h1>Tavern Information</h1>
+    <div class="text-sm mt-2 font-light">
+        <p><strong class="uppercase text-green-300">Day:</strong> <%= @game.day %></p>
+        <p><strong class="uppercase text-green-300">History:</strong> <%= @game.history %></p>
+        <p><strong class="uppercase text-green-300">Tavern Popularity:</strong> <%= float_to_percentage(@game.tavern_popularity) %></p>
+        <p><strong class="uppercase text-green-300">Colony Prosperity:</strong> <%= float_to_percentage(@game.colony_prosperity) %></p>
+        <p><strong class="uppercase text-green-300">Credits:</strong> <%= @game.credits %></p>
+        <p><strong class="uppercase text-green-300">Beer Cost:</strong> <%= @game.beer_cost %></p>
+        <p><strong class="uppercase text-green-300">Beer Sell Price:</strong> <%= @game.beer_sell_price %></p>
+        <p><strong class="uppercase text-green-300">Beers in Stock:</strong> <%= @game.beers_in_stock %></p>
+        <%# <p><strong>Current Time:</strong> <%= @game.current_time %>
+        <%# <p><strong>Event Probability:</strong> <%= float_to_percentage(@game.event_probability) %>
+        <%# <p><strong>Is Event Triggered:</strong> <%= @game.is_event_triggered %>
+    </div>
+</div>
