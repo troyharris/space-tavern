@@ -15,7 +15,7 @@ module GptManager
             user_prompt += "\nGiven the tavern's history: "
             user_prompt += @game.history ? "\"#{@game.history}\"," : "\"No significant events have occurred yet.\","
             puts "User prompt: #{user_prompt}"
-            return GptChat.new(system_prompt, user_prompt).chat
+            return GptChat.new(system_prompt, user_prompt).generate_chat_object
         end
     end
 end

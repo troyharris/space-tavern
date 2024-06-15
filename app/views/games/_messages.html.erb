@@ -9,5 +9,9 @@
             </ul>
         </div>
     </div>
-    <%= button_to 'Advance Time', advance_time_game_path(@game), method: :post, data: { turbo_frame: '_top' } %>
+    <%= button_to 'Advance Time', advance_time_game_path(@game), 
+        method: :post,
+        data: { turbo_frame: '_top' },
+        class: 'w-full bg-green-700 mt-4 py-4 rounded '
+    %>
 </div>

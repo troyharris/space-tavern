@@ -1,15 +1,49 @@
-<h1>Games</h1>
-<div id="games">
+<div class="min-h-screen bg-cover bg-center bg-sttitle">
+    <div class="flex items-center justify-center w-full p-5">
+        <h1 class="text-center font-infoheader uppercase text-5xl">Space Tavern</h1>
   <% if @games.any? %>
-    <% @games.each do |game| %>
-      <div class="game">
-        <h2><%= game.name %></h2>
-        <p><%= game.description %></p>
-        <!-- Add more game attributes as needed -->
-        <%= button_to 'Show', game_path(game), method: :get, data: { turbo_action: 'advance' } %>
-      </div>
-    <% end %>
+  <div class="w-1/3 ml-8 mt-4">
+    <div class="w-full py-8 px-4 backdrop-blur-md bg-slate-950/30 rounded border-2 border-green-500 font-infoheader uppercase">
+        <h1 class="text-green-500 text-lg pb-2">Existing Games</h1>
+        <% @games.each do |game| %>
+        <div class="pl-4 py-2">
+            <h2 class="text-sm normal-case"><%= link_to game.name, game_path(game), data: { turbo_action: 'advance' } %></h2>
+        </div>
+        <% end %>
+    </div>
   <% else %>
     <p>No games available.</p>
   <% end %>
+    <button onclick="openModal()" class="w-full bg-green-700 mt-4 py-4 rounded font-infoheader uppercase">New Game</button>
+
+
+      </div>
+      </div>
 </div>
+
+<div id="newGameModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center backdrop-blur-md">
+    <div class="bg-white p-6 rounded shadow-lg">
+        <h2 class="text-xl font-infoheader text-green-700 uppercase mb-4">Create New Game</h2>
+        <%= form_with model: @game, scope: :game, url: create_new_game_games_path, method: :post, local: true, data: { turbo_frame: '_top' } do |form| %>
+            <div class="mb-4">
+                <%= form.label :name, "Tavern Name", class: "block text-sm font-medium font-infoheader text-slate-700" %>
+                <%= form.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 text-slate-700 font-infoheader shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+            </div>
+            <%= form.hidden_field :description, value: "test description" %>
+            <div class="flex justify-end">
+                <button type="button" onclick="closeModal()" class="font-infoheader text-sm uppercase mr-4 bg-gray-500 text-white py-2 px-4 rounded">Cancel</button>
+                <%= form.submit "Create", class: "font-infoheader uppercase text-sm bg-green-700 text-white py-2 px-4 rounded" %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('newGameModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('newGameModal').classList.add('hidden');
+    }
+</script>

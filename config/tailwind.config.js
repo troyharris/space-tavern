@@ -13,6 +13,10 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         infoheader: ['"Victor Mono"'],
       },
+      backgroundImage: {
+        stbg: "url('/st-bg.png')",
+        sttitle: "url('/st-title.png')",
+      },
     },
   },
   plugins: [

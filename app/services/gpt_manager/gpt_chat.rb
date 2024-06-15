@@ -16,5 +16,14 @@ module GptManager
         )
         return response.dig("choices", 0, "message", "content")
       end
+
+      def parse_chat(chat)
+        return JSON.parse(chat)
+      end
+
+      def generate_chat_object
+        raw_chat = chat
+        return parse_chat(raw_chat)
+      end
     end
 end

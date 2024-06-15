@@ -19,13 +19,13 @@ module EventManager
         visiting_patrons = Patron.where(game_id: @game.id, is_visiting: true)
         if visiting_patrons.count > 0
           puts "There are #{visiting_patrons.count} visiting patrons. Checking for events"
-          MessageManager::MessageService.create_message(
-            @game,
-            :debug,
-            "Checked and generated events for game #{@game.id}"
-          )
+          #MessageManager::MessageService.create_message(
+          #  @game,
+          #  :debug,
+          #  "Checked and generated events for game #{@game.id}"
+          #)
           random_check = rand
-          generate_events if random_check < @game.event_probability
+          generate_event if random_check < @game.event_probability
         end
       end
 
@@ -47,15 +47,32 @@ module EventManager
         end
       end
 
-      def generate_events
+      def generate_gpt_event
         #puts "Generating events for game #{game.id}"
         # Logic to generate game events
         event_type = select_event_type
+        GptManager::CreateEvent.new(@game).create_event(event_type)
+      end
+
+      def save_event_message(event)
         MessageManager::MessageService.create_message(
           @game,
           :event,
-          GptManager::CreateEvent.new(@game).create_event(event_type)
+          event.description
         )
+      end
+
+      def generate_event
+        event = generate_gpt_event
+        event_data = {
+          day: @game.day,
+          time: @game.current_time.strftime("%H:%M"),
+          event_type: event["event_type"],
+          description: event["event_description"],
+          game_id: @game.id
+        }
+        event_obj = Event.create(event_data)
+        save_event_message(event_obj)
       end
     end
   end

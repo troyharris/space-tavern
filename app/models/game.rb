@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
     # Relationships
-    has_many :patrons
-    has_many :events
-    has_many :messages
+    has_many :patrons, dependent: :destroy
+    has_many :events, dependent: :destroy
+    has_many :messages, dependent: :destroy
 
     # Validations
     validates :name, presence: true
