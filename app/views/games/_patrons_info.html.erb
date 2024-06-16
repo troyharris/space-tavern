@@ -1,10 +1,38 @@
 <div class="font-infoheader font-bold uppercase bg-slate-950 border-green-500 border-2 rounded-md p-4">
-    <h2>Patrons</h2>
+    <h2>Visiting Patrons</h2>
     <div class="text-sm mt-2 font-light">
         <ul>
         <% @game.patrons.each do |patron| %>
             <% if patron.is_visiting %>
-                <li><%= patron.name %> - <%= patron.job %></li>
+                <li>
+                    <a href="#" onclick="document.getElementById('patronModal-<%= patron.id %>').style.display='block'">
+                        <%= patron.name %> - <%= patron.job %>
+                    </a>
+                </li>
+                <!-- Patron Modal -->
+                <div id="patronModal-<%= patron.id %>" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display:none;" onclick="document.getElementById('patronModal-<%= patron.id %>').style.display='none'">
+                    <div class="modal-content bg-slate-950 border-green-500 border-2 rounded-md p-4 m-6" onclick="event.stopPropagation()">
+                        <span onclick="document.getElementById('patronModal-<%= patron.id %>').style.display='none'" class="close text-green-500 text-2xl" style="cursor:pointer;">&times;</span>
+                        <h2 class="font-bold uppercase text-green-300"><%= patron.name %></h2>
+                        <p class="text-sm mt-2 font-light"><strong>Job:</strong> <%= patron.job %></p>
+                        <p class="text-sm mt-2 font-light"><strong>Credits:</strong> <%= patron.credits %></p>
+                        <p class="text-sm mt-2 font-light"><strong>Description:</strong> <%= patron.description %></p>
+                        <p class="text-sm mt-2 font-light"><strong>Age:</strong> <%= patron.age %></p>
+                        <p class="text-sm mt-2 font-light"><strong>Enjoys Tavern:</strong> <%= float_to_percentage(patron.enjoys_tavern) %></p>
+                        <p class="text-sm mt-2 font-light"><strong>Visit Length:</strong> <%= patron.visit_length %> days</p>
+                        <h3 class="font-bold uppercase text-green-300 mt-4">Relationships</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <% PatronRelationship.where(patron_id: patron.id).or(PatronRelationship.where(other_patron_id: patron.id)).each do |relationship| %>
+                                <% other_patron = relationship.patron_id == patron.id ? Patron.find(relationship.other_patron_id) : Patron.find(relationship.patron_id) %>
+                                <div class="border border-green-500 p-2">
+                                    <h4 class="font-bold"><%= other_patron.name %></h4>
+                                    <p>Affinity: <%= relationship.affinity %></p>
+                                    <p>History: <%= relationship.shared_history %></p>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
             <% end %>
         <% end %>
         </ul>

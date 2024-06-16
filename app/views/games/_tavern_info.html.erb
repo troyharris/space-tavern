@@ -2,7 +2,7 @@
     <h1>Tavern Information</h1>
     <div class="text-sm mt-2 font-light">
         <p><strong class="uppercase text-green-300">Day:</strong> <%= @game.day %></p>
-        <p><strong class="uppercase text-green-300">History:</strong> <%= @game.history %></p>
+        <p><strong class="uppercase text-green-300">History:</strong> <button onclick="document.getElementById('historyPopover').style.display='block'" class="underline">VIEW</button></p>
         <p><strong class="uppercase text-green-300">Tavern Popularity:</strong> <%= float_to_percentage(@game.tavern_popularity) %></p>
         <p><strong class="uppercase text-green-300">Colony Prosperity:</strong> <%= float_to_percentage(@game.colony_prosperity) %></p>
         <p><strong class="uppercase text-green-300">Credits:</strong> <%= @game.credits %></p>
@@ -13,4 +13,13 @@
         <%# <p><strong>Event Probability:</strong> <%= float_to_percentage(@game.event_probability) %>
         <%# <p><strong>Is Event Triggered:</strong> <%= @game.is_event_triggered %>
     </div>
+</div>
+
+<!-- The Popover -->
+<div id="historyPopover" class="popover fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display:none;" onclick="document.getElementById('historyPopover').style.display='none'">
+  <div class="popover-content bg-slate-950 border-green-500 border-2 rounded-md p-4 m-6" onclick="event.stopPropagation()">
+    <span onclick="document.getElementById('historyPopover').style.display='none'" class="close text-green-500 text-2xl" style="cursor:pointer;">&times;</span>
+    <h2 class="font-bold uppercase text-green-300">Game History</h2>
+    <p class="text-sm mt-2 font-light"><%= @game.history.present? ? @game.history : "No tavern history yet." %></p>
+  </div>
 </div>

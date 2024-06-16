@@ -35,7 +35,7 @@ event_user_prompts:
     asleep on a chair."}
   relationship_based: >
     Create an event that affects the relationships between two or more patrons currently
-    visiting the bar. event_type is always "relationship_based". Format in JSON like this example:
+    visiting the bar. Only use patrons listed as currently visiting the bar. event_type is always "relationship_based". Format in JSON like this example:
     {"event_type": "relationship_based", "event_description": "Two old friends reunite and
     reminisce about old times, strengthening their bond."}
   tavern_based: >

@@ -14,6 +14,7 @@ module GameLogic
         new_time = @game.current_time + 1.hour
         if new_time.hour >= 2 && new_time.hour < 17
           @game.update(current_time: new_time.change(hour: 17), day: @game.day + 1)
+          GameLogic::UpdateGameHistory.new(@game).call
         else
           @game.update(current_time: new_time)
         end

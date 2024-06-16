@@ -18,7 +18,7 @@ module EventManager
       def check_and_generate_events
         visiting_patrons = Patron.where(game_id: @game.id, is_visiting: true)
         if visiting_patrons.count > 0
-          puts "There are #{visiting_patrons.count} visiting patrons. Checking for events"
+          # puts "There are #{visiting_patrons.count} visiting patrons. Checking for events"
           #MessageManager::MessageService.create_message(
           #  @game,
           #  :debug,
@@ -34,6 +34,9 @@ module EventManager
         cumulative = []
         sum = 0.0
         EVENT_TYPES.each do |etype, weight|
+          # Skip relationship_based event if there are less than 2 visiting patrons
+          next if etype == "relationship_based" && Patron.where(game_id: @game.id, is_visiting: true).count < 2
+          
           sum += weight
           cumulative << [etype, sum]
         end
@@ -55,10 +58,11 @@ module EventManager
       end
 
       def save_event_message(event)
+        message_content = "Event Type: #{event.event_type}, Description: #{event.description}"
         MessageManager::MessageService.create_message(
           @game,
           :event,
-          event.description
+          message_content
         )
       end
 
