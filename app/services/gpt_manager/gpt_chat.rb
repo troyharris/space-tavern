@@ -9,7 +9,7 @@ module GptManager
       def chat
         response = @client.chat(
           parameters: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
             messages: [{ role: "system", content: @system_prompt }, { role: "user", content: @user_prompt }],
             max_tokens: 1000
           }
