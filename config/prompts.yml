@@ -20,42 +20,77 @@ generate_patrons: >
   imagination. Do not include any markdown, code blocks, backticks, or the
   string ```json.
 event_system_prompt: >
-  You are an AI assistant that is running a game set in the future on a human colony
-  on a frontier planet. You create imaginative and exciting events, people, locales,
-  and other game items as you are asked. Events can be either positive or negative,
-  just make sure they're dramatic. Events should include financial impacts on the tavern
-  when appropriate, such as increased sales, repair costs, or changes in beer prices.
-  It is very important that you follow the instructions of the user prompt exactly,
-  especially as it relates to formatting. You must return only raw JSON without any
-  markdown formatting, code blocks, backticks, or the string ```json. For writing style,
-  your guiding principles include a preference for strong verbs over adverbs and
-  adjectives and a strict adherence to the Strunk and White grammar rules.
+  You are an AI assistant running a game set in the future on a human colony on a frontier planet.
+  You create imaginative and exciting events that affect a tavern's operations and finances.
+
+  FINANCIAL IMPACT RULES:
+  1. Numbers indicate the TAVERN'S perspective:
+     - POSITIVE numbers = tavern GAINS/INCREASES (more credits, higher beer cost)
+     - NEGATIVE numbers = tavern LOSES/DECREASES (fewer credits, lower beer cost)
+  2. Beer cost changes should be more common than credit changes
+     - Beer costs typically range from 1-10 credits (integers only)
+     - Small changes (+1 or -1) for minor events
+     - Medium changes (+2 or -2) for moderate events
+     - Large changes (+3 to +5 or -3 to -5) for major events
+  3. Credit changes should be proportional:
+     - Small events: 5-50 credits
+     - Medium events: 50-200 credits
+     - Large events: 200-500 credits
+  4. Every event should consider either a credit change or beer cost change
+
+  FORMAT: Return only raw JSON without markdown, code blocks, backticks, or ```json.
+  STYLE: Use strong verbs over adverbs/adjectives. Follow Strunk & White rules.
 event_user_prompts:
   mundane: >
     Create a mundane event that happens in the tavern. event_type is always "mundane".
     Format in JSON like this example, sending only the raw JSON without any markdown,
     code blocks, backticks, or the string ```json:
-    {"event_type": "mundane", "event_description": "A cat walks into the tavern and falls
-    asleep on a chair.", "financial_impact": {"credits_change": 0, "reason": "No financial impact"}}
+    {
+      "event_type": "mundane",
+      "event_description": "A local merchant spills their drink, causing others to order extra rounds.",
+      "financial_impact": {
+        "credits_change": 25,
+        "beer_cost_change": 0,
+        "reason": "Increased drink orders from the spill incident"
+      }
+    }
   relationship_based: >
     Create an event that affects the relationships between two or more patrons currently
     visiting the bar. Only use patrons listed as currently visiting the bar. event_type
     is always "relationship_based". Format in JSON like this example, sending only the
     raw JSON without any markdown, code blocks, backticks, or the string ```json:
-    {"event_type": "relationship_based", "event_description": "Two old friends reunite and
-    celebrate by buying rounds for everyone.", "financial_impact": {"credits_change": 50,
-    "reason": "Increased sales from celebration"}}
+    {
+      "event_type": "relationship_based",
+      "event_description": "Two mining executives strike a major deal, celebrating with expensive imports.",
+      "financial_impact": {
+        "credits_change": 150,
+        "beer_cost_change": 1,
+        "reason": "Celebration sales and increased beer costs from premium imports"
+      }
+    }
   tavern_based: >
     Create an event that is significant to the tavern itself. event_type is always
     "tavern_based". Format in JSON like this example, sending only the raw JSON
     without any markdown, code blocks, backticks, or the string ```json:
-    {"event_type": "tavern_based", "event_description": "The tavern celebrates its 100th
-    anniversary with a grand party.", "financial_impact": {"credits_change": -100,
-    "reason": "Party decoration and celebration costs"}}
+    {
+      "event_type": "tavern_based",
+      "event_description": "A supply ship delay forces the tavern to source beer locally.",
+      "financial_impact": {
+        "credits_change": -75,
+        "beer_cost_change": 3,
+        "reason": "Emergency local sourcing increases costs"
+      }
+    }
   colony_based: >
     Create an event that impacts the entire colony. event_type is always "colony_based".
     Format in JSON like this example, sending only the raw JSON without any markdown,
     code blocks, backticks, or the string ```json:
-    {"event_type": "colony_based", "event_description": "A major power outage hits the colony,
-    but the tavern remains a bright spot where people gather.", "financial_impact":
-    {"credits_change": 200, "reason": "Increased business during power outage"}}
+    {
+      "event_type": "colony_based",
+      "event_description": "A trade agreement with Earth reduces import tariffs.",
+      "financial_impact": {
+        "credits_change": 0,
+        "beer_cost_change": -2,
+        "reason": "Lower import costs from new trade agreement"
+      }
+    }

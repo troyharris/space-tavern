@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[ show update destroy advance_time]
+  before_action :set_game, only: %i[ show update destroy advance_time update_beer_price]
 
   # GET /games
   def index
@@ -71,6 +71,19 @@ class GamesController < ApplicationController
       flash[:alert] = result[:message]
     end
     redirect_to game_path(game)
+  end
+
+  def update_beer_price
+    new_price = params[:beer_sell_price].to_i
+    result = GameLogic::FinancialService.new(@game).adjust_prices(new_sell_price: new_price)
+    
+    if result[:success]
+      flash[:notice] = result[:message]
+    else
+      flash[:alert] = result[:message]
+    end
+    
+    redirect_to game_path(@game)
   end
 
   private

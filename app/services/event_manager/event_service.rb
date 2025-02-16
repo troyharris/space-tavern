@@ -66,16 +66,18 @@ module EventManager
         description: event["event_description"],
         game_id: @game.id,
         credits_change: event.dig("financial_impact", "credits_change") || 0,
+        beer_cost_change: event.dig("financial_impact", "beer_cost_change") || 0,
         financial_reason: event.dig("financial_impact", "reason")
       }
       
       event_obj = Event.create(event_data)
       
       # Apply financial impact if present
-      if event_obj.credits_change != 0
+      if event_obj.credits_change != 0 || event_obj.beer_cost_change != 0
         financial_service = GameLogic::FinancialService.new(@game)
         financial_result = financial_service.apply_financial_event(
-          credits_change: event_obj.credits_change,
+          credits_change: event_obj.credits_change, 
+          beer_cost_change: event_obj.beer_cost_change,
           reason: event_obj.financial_reason
         )
         
@@ -93,8 +95,11 @@ module EventManager
 
     def save_event_message(event)
       message_content = "Event Type: #{event.event_type}, Description: #{event.description}"
-      if event.credits_change != 0
-        message_content += "\nFinancial Impact: #{event.credits_change} credits (#{event.financial_reason})"
+      if event.credits_change != 0 || event.beer_cost_change != 0
+        message_content += "\nFinancial Impact:"
+        message_content += " #{event.credits_change} credits" if event.credits_change != 0
+        message_content += " | Beer cost change: #{event.beer_cost_change}" if event.beer_cost_change != 0
+        message_content += " (#{event.financial_reason})"
       end
       MessageManager::MessageService.create_message(
         @game,

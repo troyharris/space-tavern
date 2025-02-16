@@ -1,99 +1,41 @@
-# Active Context
+# Recent Changes
+
+## Financial System Update (2025-02-15)
+
+- Added beer cost changes to events
+- Events now affect both tavern credits and beer costs
+- Beer costs must be integers (1-10 credits range)
+- Fixed AI confusion with financial transactions by providing clear rules
+- Added validation to prevent beer costs from going below 1 credit
+- Implemented database migrations for financial impact and beer cost changes
+- Added FinancialService to handle all financial transactions
 
 ## Current Focus
 
-The project is in its initial development phase, establishing core functionality for:
-
-1. Game State Management
-
-   - Basic tavern simulation mechanics
-   - Comprehensive financial system implementation
-     - Beer inventory management (purchase/sell)
-     - Price adjustment system
-     - Event-based financial impacts
-   - Time progression handling
-
-2. AI Integration
-
-   - Patron generation system
-   - Event creation pipeline
-   - Dynamic narrative generation
-
-3. Frontend Development
-
-   - Real-time updates via Hotwire
-   - Basic game interface
-   - Patron and event displays
-
-## Recent Changes
-
-Recent developments include:
-
-1. Financial System Implementation
-   - Added financial impact tracking to events
-   - Implemented FinancialService for tavern operations
-   - Added beer inventory and pricing management
-2. Database Updates
-   - Added credits_change and financial_reason to events
-   - Enhanced financial tracking capabilities
-
-Previous changes:
-
-1. Core Models
-
-   - Game structure
-   - Patron system
-   - Event tracking
-   - Message handling
-
-2. Service Architecture
-
-   - GPT integration services
-   - Game logic services
-   - Event and patron management
-
-3. Frontend Framework
-
-   - Hotwire/Turbo implementation
-   - Tailwind CSS setup
-   - Basic view templates
-
-## Next Steps
-
-1. Immediate Priorities
-
-   - Complete core game loop implementation
-   - Enhance AI-driven event generation
-   - Implement basic financial systems
-
-2. Technical Tasks
-
-   - Refine GPT prompt engineering
-   - Optimize database queries
-   - Enhance real-time updates
-
-3. Feature Development
-
-   - Expand patron interaction system
-   - Implement inventory management
-   - Develop event consequence system
+- Monitoring the new financial system to ensure events generate appropriate beer cost changes
+- Ensuring AI follows the integer-based beer cost rules
+- Watching for proper positive/negative number usage in financial impacts
+- Validating event financial impacts against defined ranges
+- Testing edge cases in beer cost adjustments
 
 ## Active Decisions
 
-1. Architecture
+1. Financial Impact Rules
 
-   - Service-oriented design for maintainability
-   - Heavy use of AI for content generation
-   - Real-time updates for game state
+   - Beer cost changes should be more common than credit changes
+   - Beer costs must stay within 1-10 credits range
+   - Small events: +/-1 credit change
+   - Medium events: +/-2 credits change
+   - Large events: +/-3 to +/-5 credits change
 
-2. Technical Choices
+2. Implementation Guidelines
 
-   - Rails 7 for full-stack capabilities
-   - Hotwire for dynamic updates
-   - PostgreSQL for complex relationships
+   - All financial changes must be processed through FinancialService
+   - Events must include both financial_impact and beer_cost_change fields
+   - Database constraints enforce valid beer cost ranges
+   - Transaction wrapping for all financial operations
 
-3. Development Focus
-
-   - Prioritizing core game mechanics
-   - Emphasis on AI integration
-   - Building maintainable architecture
+3. AI Integration
+   - Updated prompts to enforce financial impact rules
+   - Clear guidelines for AI to generate appropriate cost changes
+   - Structured validation of AI-generated financial values

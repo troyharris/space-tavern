@@ -47,18 +47,30 @@ class GameLogic::FinancialService
     }
   end
 
-  def apply_financial_event(credits_change:, reason:)
+  def apply_financial_event(credits_change:, beer_cost_change: 0, reason:)
     return { success: false, message: "Invalid credits change." } unless credits_change.is_a?(Numeric)
+    return { success: false, message: "Invalid beer cost change." } unless beer_cost_change.is_a?(Numeric)
 
     @game.with_lock do
       @game.credits += credits_change
+      if beer_cost_change != 0
+        new_cost = @game.beer_cost + beer_cost_change
+        # Ensure beer cost stays at least 1 credit
+        new_cost = [1, new_cost].max
+        @game.beer_cost = new_cost
+      end
       @game.save!
     end
 
+    message = reason.dup
+    message << " (Credits change: #{credits_change})" if credits_change != 0
+    message << " (Beer cost change: #{beer_cost_change})" if beer_cost_change != 0
+
     {
       success: true,
-      message: "#{reason} (Credits change: #{credits_change})",
-      new_balance: @game.credits
+      message: message,
+      new_balance: @game.credits,
+      new_beer_cost: @game.beer_cost
     }
   end
 
