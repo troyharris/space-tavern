@@ -12,6 +12,11 @@ The system follows a service-oriented architecture within the Rails framework, w
    - `AdvanceTimeService`: Handles time progression
    - `CreateRelationshipsService`: Manages patron relationships
    - `UpdateGameHistory`: Records game events and changes
+   - `FinancialService`: Manages tavern finances
+     - Beer inventory management
+     - Price adjustments
+     - Financial event processing
+     - Transaction handling
 
 2. GPT Manager Services
 
@@ -69,19 +74,26 @@ The system follows a service-oriented architecture within the Rails framework, w
 
 ## Key Technical Decisions
 
-1. AI Integration
+1. Financial System
+
+   - Atomic transactions with database locking
+   - Event-driven financial impacts
+   - Comprehensive inventory tracking
+   - Real-time financial status updates
+
+2. AI Integration
 
    - OpenAI GPT for content generation
    - Structured prompts for consistent output
    - Asynchronous processing where appropriate
 
-2. Frontend Integration
+3. Frontend Integration
 
    - Hotwire/Turbo for real-time updates
    - Tailwind CSS for styling
    - Progressive enhancement approach
 
-3. Data Management
+4. Data Management
 
    - PostgreSQL for persistent storage
    - Active Record for ORM

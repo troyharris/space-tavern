@@ -5,14 +5,66 @@
         <p><strong class="uppercase text-green-300">History:</strong> <button onclick="document.getElementById('historyPopover').style.display='block'" class="underline">VIEW</button></p>
         <p><strong class="uppercase text-green-300">Tavern Popularity:</strong> <%= float_to_percentage(@game.tavern_popularity) %></p>
         <p><strong class="uppercase text-green-300">Colony Prosperity:</strong> <%= float_to_percentage(@game.colony_prosperity) %></p>
-        <p><strong class="uppercase text-green-300">Credits:</strong> <%= @game.credits %></p>
-        <p><strong class="uppercase text-green-300">Beer Cost:</strong> <%= @game.beer_cost %></p>
-        <p><strong class="uppercase text-green-300">Beer Sell Price:</strong> <%= @game.beer_sell_price %></p>
-        <p><strong class="uppercase text-green-300">Beers in Stock:</strong> <%= @game.beers_in_stock %></p>
+        <div class="mt-4 mb-2 border-t border-green-500 pt-2">
+            <h2 class="text-green-300 uppercase">Financial Status</h2>
+        </div>
+        <p>
+            <strong class="uppercase text-green-300">Credits:</strong>
+            <span class="<%= @game.credits > 0 ? 'text-green-400' : 'text-red-400' %>">
+                <%= @game.credits %>
+            </span>
+        </p>
+        <p>
+            <strong class="uppercase text-green-300">Beer Cost:</strong>
+            <%= @game.beer_cost %>
+        </p>
+        <p>
+            <strong class="uppercase text-green-300">Beer Sell Price:</strong>
+            <%= @game.beer_sell_price %>
+        </p>
+        <p>
+            <strong class="uppercase text-green-300">Profit per Beer:</strong>
+            <span class="<%= (@game.beer_sell_price - @game.beer_cost) > 0 ? 'text-green-400' : 'text-red-400' %>">
+                <%= @game.beer_sell_price - @game.beer_cost %>
+            </span>
+        </p>
+        <p>
+            <strong class="uppercase text-green-300">Beers in Stock:</strong>
+            <span class="<%= @game.beers_in_stock > 5 ? 'text-green-400' : 'text-yellow-400' %>">
+                <%= @game.beers_in_stock %>
+            </span>
+        </p>
+        <p>
+            <strong class="uppercase text-green-300">Stock Value:</strong>
+            <%= @game.beers_in_stock * @game.beer_sell_price %>
+        </p>
+        <!-- Buy Beer Button -->
+        <button onclick="document.getElementById('buyBeerModal').style.display='block'" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          Buy Beer
+        </button>
         <%# <p><strong>Current Time:</strong> <%= @game.current_time %>
         <%# <p><strong>Event Probability:</strong> <%= float_to_percentage(@game.event_probability) %>
         <%# <p><strong>Is Event Triggered:</strong> <%= @game.is_event_triggered %>
     </div>
+</div>
+<!-- Buy Beer Modal -->
+<div id="buyBeerModal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display:none;" onclick="document.getElementById('buyBeerModal').style.display='none'">
+  <div class="modal-content bg-slate-950 border-green-500 border-2 rounded-md p-4 m-6" onclick="event.stopPropagation()">
+    <span onclick="document.getElementById('buyBeerModal').style.display='none'" class="close text-green-500 text-2xl" style="cursor:pointer;">&times;</span>
+    <h2 class="font-bold uppercase text-green-300">Buy Beer</h2>
+    <form action="<%= buy_beer_game_path(@game) %>" method="post" class="mt-4">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="mb-4">
+        <label for="number_of_beers" class="block text-green-300">Number of Beers:</label>
+        <input type="number" name="number_of_beers" id="number_of_beers" min="1" class="w-full p-2 border border-green-500 rounded bg-slate-900 text-green-300" required>
+      </div>
+      <div class="flex justify-end">
+        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          Purchase
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- The Popover -->

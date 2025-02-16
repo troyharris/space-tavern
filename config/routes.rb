@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     member do
       post 'advance_time'
+      post 'buy_beer'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

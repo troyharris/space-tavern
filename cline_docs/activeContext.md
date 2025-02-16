@@ -7,7 +7,10 @@ The project is in its initial development phase, establishing core functionality
 1. Game State Management
 
    - Basic tavern simulation mechanics
-   - Financial tracking systems
+   - Comprehensive financial system implementation
+     - Beer inventory management (purchase/sell)
+     - Price adjustment system
+     - Event-based financial impacts
    - Time progression handling
 
 2. AI Integration
@@ -24,7 +27,17 @@ The project is in its initial development phase, establishing core functionality
 
 ## Recent Changes
 
-Initial project setup including:
+Recent developments include:
+
+1. Financial System Implementation
+   - Added financial impact tracking to events
+   - Implemented FinancialService for tavern operations
+   - Added beer inventory and pricing management
+2. Database Updates
+   - Added credits_change and financial_reason to events
+   - Enhanced financial tracking capabilities
+
+Previous changes:
 
 1. Core Models
 

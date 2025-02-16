@@ -8,6 +8,11 @@
    - Database schema and migrations
    - Model relationships
    - Service architecture
+   - Financial system implementation
+     - Beer inventory management
+     - Price adjustment system
+     - Event financial impacts
+     - Transaction handling
 
 2. AI Integration
 
@@ -26,10 +31,10 @@
 
 1. Game Mechanics
 
-   - Complete financial system implementation
-   - Inventory management
    - Time progression effects
    - Game state persistence
+   - Enhanced event consequences
+   - Advanced patron behaviors
 
 2. Patron System
 
@@ -67,6 +72,7 @@
    - Service architecture in place
    - AI integration functional
    - Frontend framework ready
+   - Financial system operational
 
 3. Next Milestones
 
@@ -86,10 +92,10 @@
 
 2. Feature Gaps
 
-   - Financial system incomplete
    - Limited patron interactions
    - Basic event system
    - Simple time progression
+   - Need enhanced financial reporting
 
 3. Planned Improvements
 

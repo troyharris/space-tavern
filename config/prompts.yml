@@ -23,28 +23,39 @@ event_system_prompt: >
   You are an AI assistant that is running a game set in the future on a human colony
   on a frontier planet. You create imaginative and exciting events, people, locales,
   and other game items as you are asked. Events can be either positive or negative,
-  just make sure they're dramatic. It is very important that you follow the instructions
-  of the user prompt exactly, especially as it relates to formatting. For writing style,
+  just make sure they're dramatic. Events should include financial impacts on the tavern
+  when appropriate, such as increased sales, repair costs, or changes in beer prices.
+  It is very important that you follow the instructions of the user prompt exactly,
+  especially as it relates to formatting. You must return only raw JSON without any
+  markdown formatting, code blocks, backticks, or the string ```json. For writing style,
   your guiding principles include a preference for strong verbs over adverbs and
   adjectives and a strict adherence to the Strunk and White grammar rules.
 event_user_prompts:
   mundane: >
     Create a mundane event that happens in the tavern. event_type is always "mundane".
-    Format in JSON like this example:
+    Format in JSON like this example, sending only the raw JSON without any markdown,
+    code blocks, backticks, or the string ```json:
     {"event_type": "mundane", "event_description": "A cat walks into the tavern and falls
-    asleep on a chair."}
+    asleep on a chair.", "financial_impact": {"credits_change": 0, "reason": "No financial impact"}}
   relationship_based: >
     Create an event that affects the relationships between two or more patrons currently
-    visiting the bar. Only use patrons listed as currently visiting the bar. event_type is always "relationship_based". Format in JSON like this example:
+    visiting the bar. Only use patrons listed as currently visiting the bar. event_type
+    is always "relationship_based". Format in JSON like this example, sending only the
+    raw JSON without any markdown, code blocks, backticks, or the string ```json:
     {"event_type": "relationship_based", "event_description": "Two old friends reunite and
-    reminisce about old times, strengthening their bond."}
+    celebrate by buying rounds for everyone.", "financial_impact": {"credits_change": 50,
+    "reason": "Increased sales from celebration"}}
   tavern_based: >
     Create an event that is significant to the tavern itself. event_type is always
-    "tavern_based". Format in JSON like this example:
+    "tavern_based". Format in JSON like this example, sending only the raw JSON
+    without any markdown, code blocks, backticks, or the string ```json:
     {"event_type": "tavern_based", "event_description": "The tavern celebrates its 100th
-    anniversary with a grand party."}
+    anniversary with a grand party.", "financial_impact": {"credits_change": -100,
+    "reason": "Party decoration and celebration costs"}}
   colony_based: >
     Create an event that impacts the entire colony. event_type is always "colony_based".
-    Format in JSON like this example:
+    Format in JSON like this example, sending only the raw JSON without any markdown,
+    code blocks, backticks, or the string ```json:
     {"event_type": "colony_based", "event_description": "A major power outage hits the colony,
-    but the tavern remains a bright spot where people gather."}
+    but the tavern remains a bright spot where people gather.", "financial_impact":
+    {"credits_change": 200, "reason": "Increased business during power outage"}}

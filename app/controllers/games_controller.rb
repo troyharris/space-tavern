@@ -9,14 +9,15 @@ class GamesController < ApplicationController
     Rails.logger.debug "Games: #{@games.inspect}"
 
     respond_to do |format|
-      format.html { render :index } # renders app/views/games/index.html.erb by default
+      format.html { render :index } 
       format.json { render json: @games.as_json(include: [:patrons, :events, :messages]) }
     end
   end
+
   # GET /games/1
   def show
     respond_to do |format|
-      format.html { render :show } # renders app/views/games/show.html.erb by default
+      format.html { render :show } 
       format.json { render json: @game, include: [:patrons, :events, :messages] }
     end
   end
@@ -24,7 +25,6 @@ class GamesController < ApplicationController
   # POST /games
   def create
     @game = Game.new(game_params)
-
     if @game.save
       render json: { id: @game.id }, status: :created, location: @game
     else
@@ -61,13 +61,23 @@ class GamesController < ApplicationController
     render json: game, include: [:patrons, :events, :messages]
   end
 
+  def buy_beer
+    game = Game.find(params[:id])
+    number = params[:number_of_beers].to_i
+    result = GameLogic::FinancialService.new(game).purchase_beer(number)
+    if result[:success]
+      flash[:notice] = result[:message]
+    else
+      flash[:alert] = result[:message]
+    end
+    redirect_to game_path(game)
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_game
       @game = Game.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def game_params
       params.require(:game).permit(:name, :description, :day, :history, :tavern_popularity, :colony_prosperity, :credits, :beer_cost, :beer_sell_price, :beers_in_stock)
     end
